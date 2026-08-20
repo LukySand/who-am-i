@@ -17,7 +17,11 @@ pnpm typecheck
 pnpm test:db    # resetea la base local y corre smoke.sql + rls.sql
 ```
 
-Base local: `pnpm exec supabase start` (necesita Docker). Studio en :54323.
+Base local: `pnpm exec supabase start` (necesita Docker). Studio en :54323,
+mails de prueba en Mailpit :54324.
+
+`.env.local` apunta al stack local y Vite le da prioridad sobre `.env`, así que
+`pnpm dev` nunca toca producción.
 
 ## Reglas no negociables
 
@@ -36,6 +40,9 @@ Base local: `pnpm exec supabase start` (necesita Docker). Studio en :54323.
 5. **Mobile-first de verdad.** Todo target táctil ≥44px, `safe-area-inset`
    respetado, nada que dependa de hover.
 6. **Respetar `prefers-reduced-motion`** en cada animación.
+7. **Las URLs de redirect de auth se declaran en los dos lados.** `supabase/config.toml`
+   para local y el dashboard para producción: si el origen no está en la lista,
+   Supabase lo descarta en silencio y manda el magic link al `site_url`.
 
 ## Estilo
 - CSS Modules (`Componente.module.css`) junto al componente. Tokens en `src/index.css`.

@@ -18,4 +18,6 @@
 | 14 | Los campos se revelan solos cada 2,5s | El host igual puede cortar con "Mostrar opciones". Menos toques durante la partida. |
 | 15 | Sesiones anónimas habilitadas | Los invitados necesitan `auth.uid()` para que RLS los deje jugar. Vienen apagadas por defecto: hay que activarlas también en el dashboard. |
 | 16 | El estado nunca se deriva del payload de Realtime | Ese payload viene sin el filtrado del secreto y puede llegar desordenado. Realtime solo avisa; el estado se relee con `get_game_state`. |
+| 17 | Partida Rápida crea una plantilla `is_adhoc` | Así `games.template_id` nunca es null y el motor no necesita un caso especial. No aparece en ninguna lista. |
+| 18 | `ensureSession()` valida con `getUser()`, no con `getSession()` | `getSession()` solo lee localStorage. Supabase borra los usuarios anónimos abandonados: el token seguía validando y recién explotaba al insertar en `players`. |
 

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
+import { FieldEditor, newField } from '../components/FieldEditor'
 import { Identity } from '../components/Identity'
-import { isEmoji } from '../lib/validation'
-import { api, ApiError, listTemplates } from '../lib/api'
+import { TimeLimit } from '../components/TimeLimit'
+import { api, ApiError, createAdhocTemplate, listTemplates } from '../lib/api'
 import { errorKey, useI18n } from '../lib/i18n'
-import type { Mode } from '../lib/types'
+import type { Field, Mode } from '../lib/types'
+import { useAuth } from '../lib/useAuth'
+import { isEmoji } from '../lib/validation'
 import ui from '../ui.module.css'
 import s from './NewGame.module.css'
 
@@ -13,8 +16,13 @@ type Tpl = { id: string; name: string; time_limit_s: number | null; owner_id: st
 export default function NewGame() {
   const { t, locale } = useI18n()
   const nav = useNavigate()
+  const { userId } = useAuth()
+
   const [tpls, setTpls] = useState<Tpl[] | null>(null)
   const [tplId, setTplId] = useState('')
+  const [fast, setFast] = useState(false)
+  const [fastFields, setFastFields] = useState<Field[]>([newField()])
+  const [fastLimit, setFastLimit] = useState<number | null>(30)
   const [mode, setMode] = useState<Mode>('relampago')
   const [hostPlays, setHostPlays] = useState(true)
   const [nickname, setNickname] = useState('')
@@ -37,14 +45,24 @@ export default function NewGame() {
     { id: 'a_ciegas', name: t.modeCiegas, desc: t.modeCiegasDesc },
   ]
 
-  const ready = tplId && nickname.trim().length > 0 && isEmoji(emoji)
+  const fastValid = fastFields.length > 0 && fastFields.every((f) => f.label.trim())
+  const ready = (fast ? fastValid : !!tplId) && nickname.trim().length > 0 && isEmoji(emoji)
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
+    if (!userId) return
     setBusy(true)
     setErr('')
     try {
-      const { game_id } = await api.createGame(tplId, mode, hostPlays, nickname.trim(), emoji)
+      // Partida Rápida crea una plantilla descartable: así games.template_id
+      // sigue apuntando siempre a algo y el resto del motor no cambia.
+      const id = fast
+        ? await createAdhocTemplate(
+            { name: t.fastPlay, fields: fastFields, time_limit_s: fastLimit, is_shared: false },
+            userId,
+          )
+        : tplId
+      const { game_id } = await api.createGame(id, mode, hostPlays, nickname.trim(), emoji)
       nav(`/partida/${game_id}`)
     } catch (e) {
       setErr(t[errorKey(e instanceof ApiError ? e.key : '')] as string)
@@ -62,26 +80,43 @@ export default function NewGame() {
 
       <h1 className={ui.title}>{t.create}</h1>
 
-      <div className={ui.field}>
-        <span className={ui.label}>{t.chooseTemplate}</span>
-        <div className={s.options}>
-          {tpls === null && <p className={ui.muted}>{t.loading}</p>}
-          {tpls?.map((tpl) => (
-            <button
-              key={tpl.id}
-              type="button"
-              className={s.option}
-              aria-pressed={tplId === tpl.id}
-              onClick={() => setTplId(tpl.id)}
-            >
-              <div className={s.optionName}>{tpl.name}</div>
-              <div className={s.optionDesc}>
-                {tpl.time_limit_s ? `${tpl.time_limit_s}${t.seconds}` : t.noTimer}
-              </div>
-            </button>
-          ))}
-        </div>
+      <div className={s.pair}>
+        <button type="button" className={s.option} aria-pressed={!fast} onClick={() => setFast(false)}>
+          <span className={s.optionName}>{t.chooseTemplate}</span>
+        </button>
+        <button type="button" className={s.option} aria-pressed={fast} onClick={() => setFast(true)}>
+          <span className={s.optionName}>{t.fastPlay}</span>
+        </button>
       </div>
+
+      {fast ? (
+        <>
+          <p className={ui.muted}>{t.fastPlayDesc}</p>
+          <FieldEditor fields={fastFields} onChange={setFastFields} />
+          <TimeLimit value={fastLimit} onChange={setFastLimit} />
+        </>
+      ) : (
+        <div className={ui.field}>
+          <div className={s.options}>
+            {tpls === null && <p className={ui.muted}>{t.loading}</p>}
+            {tpls?.map((tpl) => (
+              <button
+                key={tpl.id}
+                type="button"
+                className={s.option}
+                aria-pressed={tplId === tpl.id}
+                onClick={() => setTplId(tpl.id)}
+              >
+                <div className={s.optionName}>{tpl.name}</div>
+                <div className={s.optionDesc}>
+                  {tpl.owner_id === null && `${t.builtIn} · `}
+                  {tpl.time_limit_s ? `${tpl.time_limit_s}${t.seconds}` : t.noTimer}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className={ui.field}>
         <span className={ui.label}>{t.chooseMode}</span>
@@ -104,20 +139,10 @@ export default function NewGame() {
       <div className={ui.field}>
         <span className={ui.label}>{t.hostRole}</span>
         <div className={s.pair}>
-          <button
-            type="button"
-            className={s.option}
-            aria-pressed={hostPlays}
-            onClick={() => setHostPlays(true)}
-          >
+          <button type="button" className={s.option} aria-pressed={hostPlays} onClick={() => setHostPlays(true)}>
             <span className={s.optionName}>{t.hostPlays}</span>
           </button>
-          <button
-            type="button"
-            className={s.option}
-            aria-pressed={!hostPlays}
-            onClick={() => setHostPlays(false)}
-          >
+          <button type="button" className={s.option} aria-pressed={!hostPlays} onClick={() => setHostPlays(false)}>
             <span className={s.optionName}>{t.hostOnly}</span>
           </button>
         </div>

@@ -28,8 +28,8 @@ export default function Home() {
           </Link>
         )}
         {isRegistered && (
-          <Link to="/historial" className={ui.btn}>
-            {t.history}
+          <Link to="/plantillas" className={ui.btn}>
+            {t.templates}
           </Link>
         )}
       </div>

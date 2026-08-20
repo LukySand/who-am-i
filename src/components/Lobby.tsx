@@ -1,23 +1,20 @@
 import { useState } from 'react'
-import { useParams } from 'react-router'
 import { api } from '../lib/api'
 import { useI18n } from '../lib/i18n'
-import { useGameState } from '../lib/useGameState'
+import type { GameState } from '../lib/types'
 import ui from '../ui.module.css'
 import s from './Lobby.module.css'
 
-export default function Lobby() {
-  const { gameId = '' } = useParams()
+export function Lobby({ state, onRefresh }: { state: GameState; onRefresh: () => void }) {
   const { t } = useI18n()
-  const { state } = useGameState(gameId)
   const [copied, setCopied] = useState(false)
   const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState('')
 
-  if (!state) return <div className={`${ui.screen} ${ui.center}`}>{t.loading}</div>
-
-  const { game, players, me } = state
+  const { game, players, me, template } = state
   const withCard = players.filter((p) => p.plays && p.has_entry).length
-  const canStart = me?.is_host && withCard >= 3
+  const canStart = me?.is_host && withCard >= 3 && game.status !== 'playing'
+  const myPlayer = players.find((p) => p.id === me?.player_id)
 
   async function copy() {
     await navigator.clipboard.writeText(game.code)
@@ -27,8 +24,12 @@ export default function Lobby() {
 
   async function start() {
     setBusy(true)
+    setErr('')
     try {
-      await api.startGame(gameId)
+      await api.startGame(game.id)
+      onRefresh()
+    } catch {
+      setErr(t.errNeedCards)
     } finally {
       setBusy(false)
     }
@@ -36,7 +37,10 @@ export default function Lobby() {
 
   return (
     <div className={ui.screen}>
-      <h1 className={ui.title}>{t.lobby}</h1>
+      <div>
+        <h1 className={ui.title}>{t.lobby}</h1>
+        <p className={ui.muted}>{template.name}</p>
+      </div>
 
       <button type="button" className={`${ui.card} ${s.code}`} onClick={copy}>
         <span className={ui.label}>{copied ? t.copied : t.shareCode}</span>
@@ -51,7 +55,10 @@ export default function Lobby() {
               <span className={s.avatar} aria-hidden>
                 {p.emoji}
               </span>
-              <span className={s.name}>{p.nickname}</span>
+              <span className={s.name}>
+                {p.nickname}
+                {p.is_host && <span className={s.hostTag}> · {t.host}</span>}
+              </span>
               <span className={`${s.tag} ${p.has_entry ? s.tagReady : ''}`}>
                 {!p.plays ? t.onlyAdmin : p.has_entry ? t.ready : t.writing}
               </span>
@@ -62,16 +69,23 @@ export default function Lobby() {
 
       <div className={ui.spacer} />
 
-      {me?.is_host ? (
-        <div className={ui.stack}>
-          {!canStart && <p className={ui.muted}>{t.needThree}</p>}
-          <button className={`${ui.btn} ${ui.primary}`} disabled={!canStart || busy} onClick={start}>
-            {busy ? t.loading : t.startGame}
-          </button>
-        </div>
-      ) : (
-        <p className={ui.muted}>{t.waiting}</p>
-      )}
+      {err && <p className={ui.error}>{err}</p>}
+
+      <div className={ui.stack}>
+        {myPlayer?.has_entry && (
+          <p className={ui.muted}>✓ {t.savedCard}</p>
+        )}
+        {me?.is_host ? (
+          <>
+            {!canStart && <p className={ui.muted}>{t.needThree}</p>}
+            <button className={`${ui.btn} ${ui.primary}`} disabled={!canStart || busy} onClick={start}>
+              {busy ? t.loading : t.startGame}
+            </button>
+          </>
+        ) : (
+          <p className={ui.muted}>{t.waiting}</p>
+        )}
+      </div>
     </div>
   )
 }

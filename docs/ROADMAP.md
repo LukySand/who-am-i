@@ -4,7 +4,7 @@
 - [x] **Fase 1b — GitHub.** Pusheado a `LukySand/who-am-i`. Falta Vercel + `db push` (necesitan tus credenciales).
 - [x] **Fase 2 — Base de datos.** Migraciones, RLS, RPCs, generador de códigos, 6 plantillas de fábrica (3 × 2 idiomas). Tests de las tres modalidades + test de RLS con rol `authenticated`.
 - [x] **Fase 3 — Auth y lobby.** Magic link, Google, sesión anónima. Home, crear partida, unirse por código, nombre + emoji, lobby en vivo por Realtime. Verificado en navegador contra la base local.
-- [ ] **Fase 4 — Plantillas.** Creador de plantillas, campos obligatorios/opcionales/multivalor, compartir. Formulario de carga.
+- [x] **Fase 4 — Plantillas.** Creador con campos obligatorios/opcionales/multivalor, timer en la plantilla, compartir. Partida Rápida (plantilla descartable). Formulario de ficha integrado al flujo de partida. Verificado en navegador, incluido el login por magic link.
 - [ ] **Fase 5 — Motor + Relámpago.** Máquina de estados, Realtime, timer, controles del host.
 - [ ] **Fase 6 — A Ciegas.** Reusa el motor. Opciones que se reducen + revelación final.
 - [ ] **Fase 7 — Cadena.** Turnos y cola aleatoria.

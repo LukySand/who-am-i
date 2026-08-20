@@ -30,10 +30,22 @@ export function useAuth() {
   }
 }
 
-/** Garantiza una sesión antes de tocar cualquier RPC. Invitado si no hay cuenta. */
+/**
+ * Garantiza una sesión válida antes de tocar cualquier RPC. Invitado si no hay cuenta.
+ *
+ * No alcanza con getSession(): lee el JWT de localStorage sin preguntarle al
+ * servidor, y Supabase borra los usuarios anónimos abandonados. Un invitado que
+ * vuelve a los días trae un token que valida bien pero cuyo usuario ya no existe,
+ * y recién explota al insertar en players (violación de FK, 409 críptico).
+ * getUser() sí consulta al servidor: si el usuario no está, arrancamos de cero.
+ */
 export async function ensureSession() {
   const { data } = await supabase.auth.getSession()
-  if (data.session) return data.session
+  if (data.session) {
+    const { error } = await supabase.auth.getUser()
+    if (!error) return data.session
+    await supabase.auth.signOut()
+  }
   const { data: anon, error } = await supabase.auth.signInAnonymously()
   if (error) throw error
   return anon.session!
