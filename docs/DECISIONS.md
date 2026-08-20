@@ -15,3 +15,4 @@
 | 11 | El timer vive en la plantilla, no en la partida | Decisión del usuario. Partida Rápida trae un default editable. |
 | 12 | Picker de emoji del sistema, repetidos permitidos | Cero librería de emojis y cero fricción al unirse. |
 | 13 | En A Ciegas la reducción de opciones frena en 2 | Evita que la última carta quede forzada sin elección real. |
+| 14 | Los campos se revelan solos cada 2,5s | El host igual puede cortar con "Mostrar opciones". Menos toques durante la partida. |

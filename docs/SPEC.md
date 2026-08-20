@@ -15,7 +15,8 @@
 - No se puede entrar una vez empezada la partida.
 - **Nunca te toca tu propia carta.** Cuando sale, quedás fuera de esa ronda:
   no votás y no sumás puntos.
-- Los campos de una carta se revelan **de a uno**, con animación, en los tres modos.
+- Los campos de una carta se revelan **de a uno cada 2,5 segundos**, con animación,
+  en los tres modos. El host puede cortar la espera con "Mostrar opciones".
 - Acierto = 1 punto. Error o no votar = 0 puntos.
 - **Empate = posición compartida.** El tiempo no desempata (por ahora).
 - Si alguien se desconecta: su carta sigue en juego y sigue en el podio.
