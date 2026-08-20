@@ -17,12 +17,13 @@
 ```
 profiles(id → auth.users, display_name, created_at)
 
-templates(id, owner_id, name, fields jsonb, is_shared, created_at)
-  fields: [{ id, label, required, multi, max_values }]
+templates(id, owner_id, name, fields jsonb, time_limit_s, is_shared, is_adhoc, created_at)
+  fields: [{ id, label, required, multi, max_values }]   -- max_values <= 5
+  time_limit_s: null = sin limite
 
 games(id, code char(8) unique, host_id, template_id, mode,
-      host_plays bool, time_limit_s int null,
-      status, current_index, phase, phase_ends_at, order_seed,
+      host_plays bool,
+      status, round_index, phase, field_index, phase_ends_at, card_order uuid[],
       created_at, finished_at)
   status: lobby | filling | playing | reveal | finished
   phase:  reveal_fields | voting | result
@@ -37,8 +38,8 @@ guesses(id, game_id, round_index, guesser_id, guessed_player_id,
 chain_turns(id, game_id, round_index, position, player_id, resolved)  -- solo modo Cadena
 ```
 
-Índices únicos: `(game_id, lower(nickname))`, `(game_id, emoji)`,
-`(game_id, round_index, guesser_id)`.
+Índices únicos: `(game_id, lower(nickname))`, `(game_id, user_id)`,
+`(game_id, round_index, guesser_id)`. El emoji **puede** repetirse.
 
 ## Modelo de seguridad
 
@@ -50,7 +51,7 @@ El secreto del juego es la relación **carta → autor**. Si el front pudiera le
 
 | Función | Devuelve |
 |---|---|
-| `create_game(template_id, mode, host_plays, time_limit_s)` | código de 8 dígitos |
+| `create_game(template_id, mode, host_plays)` | código de 8 dígitos |
 | `join_game(code, nickname, emoji)` | player_id |
 | `submit_entry(game_id, answers)` | ok |
 | `start_game(game_id)` | ok (valida ≥3 cartas cargadas) |

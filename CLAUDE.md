@@ -14,7 +14,10 @@ de 8 dígitos, tres modos de juego, host que controla el ritmo desde su teléfon
 pnpm dev        # servidor local
 pnpm build      # tsc -b && vite build
 pnpm typecheck
+pnpm test:db    # resetea la base local y corre smoke.sql + rls.sql
 ```
+
+Base local: `pnpm exec supabase start` (necesita Docker). Studio en :54323.
 
 ## Reglas no negociables
 
@@ -38,3 +41,9 @@ pnpm typecheck
 - CSS Modules (`Componente.module.css`) junto al componente. Tokens en `src/index.css`.
 - Textos siempre vía i18n (es/en), nunca hardcodeados en JSX.
 - SQL en `supabase/migrations/`, numeradas, nunca editar una migración ya aplicada.
+- **Permisos siempre explícitos.** Supabase hospedado otorga `SELECT` por default
+  privileges y el stack local no: si no declarás el `GRANT`/`REVOKE`, el mismo SQL
+  se comporta distinto en local y en prod. Y para sacar `EXECUTE` de una función
+  hay que revocar de `PUBLIC`, no de `anon`/`authenticated`.
+- Toda RPC nueva va con su test en `supabase/tests/`. Si toca el secreto, además
+  en `rls.sql` con `set role authenticated` — como superusuario RLS no se prueba.

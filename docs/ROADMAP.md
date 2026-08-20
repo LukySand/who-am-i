@@ -2,7 +2,7 @@
 
 - [x] **Fase 1 — Pipeline.** Scaffold Vite+React+TS, build verde, docs.
 - [ ] **Fase 1b — Deploy.** Push a GitHub, conectar Vercel, env vars, deploy vivo.
-- [ ] **Fase 2 — Base de datos.** Migraciones, RLS, RPCs, generador de códigos, seed de plantillas.
+- [x] **Fase 2 — Base de datos.** Migraciones, RLS, RPCs, generador de códigos, 6 plantillas de fábrica (3 × 2 idiomas). Tests de las tres modalidades + test de RLS con rol `authenticated`.
 - [ ] **Fase 3 — Auth y lobby.** Magic link, Google, anónimos. Crear partida, unirse por código, nombre + emoji, lista en vivo.
 - [ ] **Fase 4 — Plantillas.** Creador de plantillas, campos obligatorios/opcionales/multivalor, compartir. Formulario de carga.
 - [ ] **Fase 5 — Motor + Relámpago.** Máquina de estados, Realtime, timer, controles del host.

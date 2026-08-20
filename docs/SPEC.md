@@ -2,8 +2,9 @@
 
 ## Conceptos
 
-- **Plantilla**: conjunto de campos que cada jugador responde. Campos obligatorios
-  y opcionales. Algunos campos admiten múltiples valores.
+- **Plantilla**: conjunto de campos que cada jugador responde, más el timer.
+  Campos obligatorios y opcionales. Un campo puede admitir múltiples valores
+  (hasta 5). Cada valor se revela por separado, como si fuera un campo aparte.
 - **Carta**: las respuestas de un jugador a la plantilla. Es el secreto del juego.
 - **Partida**: se identifica por plantilla + fecha. No tiene nombre.
 - **Código**: 8 dígitos numéricos, único entre partidas activas.
@@ -20,8 +21,11 @@
 - Si alguien se desconecta: su carta sigue en juego y sigue en el podio.
 - El host puede echar jugadores **solo antes de empezar**.
 - El host elige al crear la partida si **juega y administra** o **solo administra**.
-  Si solo administra, no carga carta y no es candidato.
-- Timer configurable: con tiempo (N segundos) o sin límite.
+  Si solo administra: no carga carta, no es candidato y no aparece en el podio.
+- **El timer vive en la plantilla**: con tiempo (N segundos) o sin límite.
+- **Partida Rápida**: el host escribe los campos en el momento. Genera una plantilla
+  descartable (`is_adhoc`) con un timer por defecto que puede cambiar de un toque.
+- El emoji lo elige el teclado del sistema. Dos jugadores pueden repetir emoji.
 
 ## Modo 1 — Relámpago
 
@@ -56,8 +60,9 @@ Quiz sin feedback, resultados al final.
 
 1. Se revelan los campos de cada carta, de a uno. Todos votan en secreto.
 2. **Las opciones se reducen**: un jugador que ya asignó a Ana en una carta no
-   puede volver a elegirla. Cada jugador arma una asignación uno-a-uno.
-   Con N jugadores ves N-1 cartas y tenés N-1 candidatos: la última queda forzada.
+   puede volver a elegirla. **La reducción se detiene al llegar a 2 opciones** —
+   de ahí en adelante vuelven a estar todos los candidatos disponibles, así el
+   final nunca queda forzado.
 3. Sin feedback durante la partida.
 4. Al final se recorren las cartas una por una: se muestran los datos, corre un
    timer de 3 segundos, y se revela el autor junto con quién acertó y quién no.

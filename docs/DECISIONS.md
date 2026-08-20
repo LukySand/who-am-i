@@ -12,3 +12,6 @@
 | 8 | El tiempo no desempata | Empates comparten posición. Puntaje más fino queda para después. |
 | 9 | Solo campos de texto | Número, fecha y selección quedan para más adelante. |
 | 10 | Solo 2 variables de entorno en el front | El repo es público. El client secret de Google vive en el dashboard de Supabase. |
+| 11 | El timer vive en la plantilla, no en la partida | Decisión del usuario. Partida Rápida trae un default editable. |
+| 12 | Picker de emoji del sistema, repetidos permitidos | Cero librería de emojis y cero fricción al unirse. |
+| 13 | En A Ciegas la reducción de opciones frena en 2 | Evita que la última carta quede forzada sin elección real. |
