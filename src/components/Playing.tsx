@@ -60,7 +60,7 @@ export function Playing({
         )}
       </div>
 
-      <CardReveal steps={round.steps} />
+      <CardReveal key={round.index} steps={round.steps} dimmed={result} />
 
       {result ? (
         <RoundResult round={round} players={players} mePlayerId={me?.player_id ?? null} />
@@ -70,7 +70,7 @@ export function Playing({
           <p className={ui.muted}>{t.yourCardWait}</p>
         </div>
       ) : voting && iPlay ? (
-        <div className={ui.stack}>
+        <div className={`${ui.stack} ${s.enter}`}>
           <span className={ui.label}>{voted ? t.voteLocked : t.votePrompt}</span>
           <Candidates
             players={players}

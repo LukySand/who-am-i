@@ -67,7 +67,7 @@ export function Chain({
         )}
       </div>
 
-      <CardReveal steps={round.steps} />
+      <CardReveal key={round.index} steps={round.steps} dimmed={result} />
 
       {chain && chain.attempts.length > 0 && (
         <div className={s.attempts}>
@@ -96,7 +96,7 @@ export function Chain({
           <p className={ui.muted}>{t.yourCardWait}</p>
         </div>
       ) : myTurn ? (
-        <div className={ui.stack}>
+        <div className={`${ui.stack} ${s.enter}`}>
           <p className={s.yourTurn}>{t.yourTurn}</p>
           <Candidates
             players={players}

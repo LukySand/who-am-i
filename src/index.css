@@ -12,6 +12,20 @@
 
   --radius: 16px;
   --tap: 48px; /* nada tocable por debajo de esto */
+
+  /* Movimiento. --lift y --pop-from son la parte espacial: se anulan bajo
+     prefers-reduced-motion y las animaciones siguen corriendo en opacidad,
+     así el jugador no pierde el aviso de si acertó. */
+  --lift: 14px;
+  --pop-from: 0.94;
+  --dur-tap: 120ms;   /* acuse de un toque */
+  --dur-base: 220ms;  /* cambio de estado rutinario */
+  --dur-view: 380ms;  /* entra o sale un bloque entero */
+  --dur-focal: 560ms; /* el destape: una vez por ronda */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Sobrepasa el final. Reservado a dos momentos: el voto que queda trabado y
+     el emoji del autor al destaparse. Si todo rebota, no resalta nada. */
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.25);
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
 
@@ -75,10 +89,18 @@ input {
   font: inherit;
 }
 
+/* Estos keyframes son globales y los consumen los .module.css. OJO: CSS Modules
+   reescribe el identificador de `animation:` aunque el keyframe no sea local,
+   dejándolo apuntando a un nombre inexistente — la animación no corre y el
+   elemento simplemente aparece en su estado final, así que el bug es invisible.
+   Por eso los módulos pasan el nombre por `--anim`: dentro de var() no lo tocan.
+
+   En un módulo: `--anim: rise; animation: var(--anim) ...`  ✅
+   Nunca:        `animation: rise ...`                        ❌ silenciosamente muerta */
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(var(--lift));
   }
   to {
     opacity: 1;
@@ -89,7 +111,7 @@ input {
 @keyframes pop {
   from {
     opacity: 0;
-    transform: scale(0.85);
+    transform: scale(var(--pop-from));
   }
   to {
     opacity: 1;
@@ -97,12 +119,46 @@ input {
   }
 }
 
+/* El destape: la identidad emerge desde atrás de la carta, como darla vuelta.
+   Es el pago de toda la ronda y corre una sola vez, así que puede permitirse
+   más recorrido que cualquier otra cosa de la app. */
+@keyframes unmask {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--lift) * 1.6)) scale(var(--pop-from));
+    filter: blur(6px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* La pila de respuestas cede el foco cuando aparece el autor, pero se sigue
+   leyendo: releerlas sabiendo quién las escribió es medio juego. Solo opacidad
+   — una escala fraccionaria permanente deja el texto borroso en varios teléfonos. */
+@keyframes recede {
+  to {
+    opacity: 0.62;
+  }
+}
+
+/* Movimiento reducido: se va el desplazamiento, se queda el significado.
+   Apagar todo dejaba al jugador sin saber si acertó — eso no es accesibilidad. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  :root {
+    --lift: 0px;
+    --pop-from: 1;
+  }
+
+  /* Lo que late sin parar sí molesta: se corta, incluidos los hijos —
+     el latido suele vivir en ellos, no en el contenedor marcado. */
+  [data-loop],
+  [data-loop] * {
+    animation: none !important;
   }
 }

@@ -10,7 +10,8 @@
   text-align: center;
   border: 1px dashed var(--line);
   border-radius: var(--radius);
-  animation: pop 0.3s ease both;
+  --anim: pop;
+  animation: var(--anim) 0.3s ease both;
 }
 
 .noticeTitle {
@@ -24,4 +25,10 @@
 
 .hint {
   text-align: center;
+}
+
+/* La votación llega como una unidad: marca el cambio de "mirá" a "elegí". */
+.enter {
+  --anim: rise;
+  animation: var(--anim) var(--dur-view) var(--ease-out) both;
 }

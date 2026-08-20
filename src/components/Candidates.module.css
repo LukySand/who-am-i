@@ -16,22 +16,39 @@
   background: var(--surface);
   text-align: left;
   cursor: pointer;
-  animation: pop 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
-  transition: border-color 0.15s ease, transform 0.1s ease;
+  --anim: pop;
+  animation: var(--anim) var(--dur-view) var(--ease-out) both;
+  transition: border-color var(--dur-tap) ease, background var(--dur-tap) ease,
+    transform var(--dur-tap) ease;
 }
 
 .card:active:not(:disabled) {
   transform: scale(0.96);
 }
 
+/* El voto es la única acción irreversible del jugador: la elegida se afirma con
+   un golpe corto —uno de los dos únicos rebotes de la app— y se queda a plena
+   opacidad mientras el resto se apaga. */
 .card[aria-pressed='true'] {
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  animation: commit var(--dur-view) var(--ease-spring);
+}
+
+@keyframes commit {
+  40% {
+    transform: scale(1.04);
+  }
 }
 
 .card:disabled {
-  opacity: 0.5;
+  opacity: 0.42;
   cursor: default;
+}
+
+/* La elegida no se apaga aunque la grilla quede bloqueada. */
+.card[aria-pressed='true']:disabled {
+  opacity: 1;
 }
 
 .emoji {

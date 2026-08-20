@@ -31,7 +31,8 @@
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--surface);
-  animation: pop 0.25s ease both;
+  --anim: pop;
+  animation: var(--anim) 0.25s ease both;
 }
 
 .avatar {

@@ -126,6 +126,7 @@ const es = {
   skipTurn: 'Saltear turno',
   historyNeedsAccount: 'Necesitás una cuenta para guardar tus partidas.',
   noGames: 'Todavía no jugaste ninguna partida',
+  timeUp: '¡Se acabó el tiempo!',
   revealTitle: '¿De quién era?',
 
   errGeneric: 'Algo salió mal. Probá de nuevo.',
@@ -254,6 +255,7 @@ const en: typeof es = {
   skipTurn: 'Skip turn',
   historyNeedsAccount: 'You need an account to keep your games.',
   noGames: "You haven't played any games yet",
+  timeUp: "Time's up!",
   revealTitle: 'Whose was it?',
 
   errGeneric: 'Something went wrong. Try again.',

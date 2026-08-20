@@ -6,12 +6,22 @@
   gap: 12px;
 }
 
+.up {
+  margin: 0;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--bad);
+  --anim: pop;
+  animation: var(--anim) var(--dur-base) var(--ease-out) both;
+}
+
 .bar {
   height: 8px;
   border-radius: 999px;
   background: var(--accent);
   transform-origin: left center;
   animation: drain linear both;
+  will-change: transform;
 }
 
 .urgent {

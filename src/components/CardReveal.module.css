@@ -6,6 +6,11 @@
   padding: 0;
 }
 
+.dimmed {
+  --anim: recede;
+  animation: var(--anim) var(--dur-view) var(--ease-out) both 200ms;
+}
+
 .item {
   display: grid;
   gap: 2px;
@@ -13,12 +18,12 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  animation: reveal 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
 }
 
-/* Solo el último entra animado: los anteriores ya estaban en pantalla. */
+/* Solo el último entra animado: los anteriores ya estaban en pantalla y
+   volver a animarlos haría parpadear toda la pila en cada campo nuevo. */
 .item:last-child {
-  animation-name: revealLast;
+  animation: revealLast var(--dur-view) var(--ease-out) both;
 }
 
 .label {
@@ -36,16 +41,10 @@
   text-wrap: balance;
 }
 
-@keyframes reveal {
-  from {
-    opacity: 1;
-  }
-}
-
 @keyframes revealLast {
   from {
     opacity: 0;
-    transform: translateY(14px) scale(0.96);
+    transform: translateY(var(--lift)) scale(var(--pop-from));
   }
   to {
     opacity: 1;

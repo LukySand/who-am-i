@@ -29,4 +29,8 @@
 | 25 | El host tiene "Saltear turno" en Cadena | Sin límite de tiempo, un jugador que no responde congela la partida. Es el mismo camino que el vencimiento del timer. |
 | 26 | Fechas con `Intl.DateTimeFormat` | Formatea en el idioma activo sin ninguna dependencia. Viene en el navegador. |
 | 27 | El historial reusa `/partida/:id` para ver el podio | La partida terminada ya cae en `Finished` por su `status`. Cero pantallas nuevas. |
+| 28 | Los módulos pasan el nombre de animación por `--anim` | CSS Modules reescribe el identificador de `animation:` aunque el keyframe sea global. Dentro de `var()` no lo toca. Sin esto la animación muere en silencio: no hay error y el elemento se ve en su estado final. |
+| 29 | Movimiento reducido anula `--lift`/`--pop-from`, no las animaciones | Apagar todo dejaba al jugador sin la confirmación de si acertó. Ahora se va el desplazamiento y queda la opacidad, que es la que carga el significado. |
+| 30 | El rebote queda solo en dos momentos | El voto que se traba y la cara del autor al destaparse. Estaba en nueve lugares: si todo rebota, no resalta nada. El resto desacelera con `--ease-out`. |
+| 31 | `scripts/check-css.mjs` corre dentro de `build` | El bug de la animación muerta es invisible por definición. Un chequeo del bundle es la única forma de que no vuelva. |
 

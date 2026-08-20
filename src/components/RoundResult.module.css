@@ -1,38 +1,48 @@
 .wrap {
   display: grid;
   gap: 18px;
-  animation: rise 0.35s ease both;
 }
 
+/* Secuencia del destape: primero emerge el autor, después el veredicto propio,
+   al final quiénes acertaron. Cada beat entra cuando el anterior ya se leyó. */
 .reveal {
   display: grid;
   place-items: center;
   gap: 4px;
-  padding: 22px;
+  padding: 24px 22px;
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--line);
+  --anim: unmask;
+  animation: var(--anim) var(--dur-focal) var(--ease-out) both;
 }
 
+/* El otro rebote: la cara del autor apareciendo es el pago de la ronda. */
 .emoji {
-  font-size: 3.4rem;
+  font-size: 3.6rem;
   line-height: 1;
-  animation: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.4) both 0.1s;
+  --anim: pop;
+  animation: var(--anim) var(--dur-view) var(--ease-spring) both 160ms;
 }
 
 .name {
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
+  --anim: rise;
+  animation: var(--anim) var(--dur-base) var(--ease-out) both 260ms;
 }
 
 .verdict {
   margin: 0;
   text-align: center;
   font-size: 1.15rem;
-  font-weight: 700;
-  animation: pop 0.3s ease both 0.25s;
+  font-weight: 800;
+  --anim: pop;
+  animation: var(--anim) var(--dur-base) var(--ease-out) both 420ms;
 }
 
+/* El color llega antes que la lectura: sabés si acertaste sin leer la frase. */
 .ok {
   color: var(--ok);
 }
@@ -44,6 +54,8 @@
 .who {
   display: grid;
   gap: 8px;
+  --anim: rise;
+  animation: var(--anim) var(--dur-base) var(--ease-out) both 540ms;
 }
 
 .chips {

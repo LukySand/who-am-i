@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/check-css.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "test:db": "supabase db reset >/dev/null && cat supabase/tests/smoke.sql supabase/tests/rls.sql | docker exec -i supabase_db_who-am-i psql -U postgres -d postgres -q -f -",
-    "gen:types": "supabase gen types typescript --local > src/lib/database.types.ts"
+    "gen:types": "supabase gen types typescript --local > src/lib/database.types.ts",
+    "check:css": "node scripts/check-css.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.58.0",

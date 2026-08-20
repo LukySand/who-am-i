@@ -9,5 +9,9 @@
 - [x] **Fase 6 — A Ciegas.** Opciones que se reducen con freno en 2, sin feedback durante el juego, y vuelta final carta por carta con compás de 3s. Partida de 5 jugadores jugada entera en navegador.
 - [x] **Fase 7 — Cadena.** Turnos, cola aleatoria, intentos descartados a la vista, y timeout que pasa el turno en vez de quemar la carta. Probado con y sin límite de tiempo.
 - [x] **Fase 8 — Historial.** Lista por plantilla y fecha, con puesto y puntaje. Abre el podio de cualquier partida vieja. Cubierto por test: lo ve todo usuario registrado que jugó, no solo el host, y nadie ve partidas ajenas.
-- [ ] **Fase 9 — Animaciones y pulido.** Transiciones, cuenta regresiva, revelación, podio.
+- [x] **Fase 9 — Animaciones y pulido.** Tokens de movimiento, secuencia focal del
+  destape, continuidad entre rondas y fases, acuse del voto, timer vencido, y
+  camino de movimiento reducido que conserva el feedback. Se descubrió y arregló
+  que 18 animaciones estaban muertas por el scoping de CSS Modules; queda cubierto
+  por `pnpm check:css`.
 - [ ] **Fase 10 — Prueba real.** Partida con 5+ teléfonos. Bugs de reconexión y timer.

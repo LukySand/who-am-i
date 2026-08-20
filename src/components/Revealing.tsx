@@ -58,13 +58,13 @@ export function Revealing({
         <h1 className={s.heading}>{t.revealTitle}</h1>
       </div>
 
-      <CardReveal steps={round.steps} />
+      <CardReveal key={round.index} steps={round.steps} dimmed={held} />
 
       {held ? (
         <RoundResult round={round} players={players} mePlayerId={me?.player_id ?? null} />
       ) : (
         <div className={s.hold} aria-live="polite">
-          <div className={s.dots}>
+          <div className={s.dots} data-loop>
             <span />
             <span />
             <span />

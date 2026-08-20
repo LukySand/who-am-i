@@ -12,8 +12,9 @@ de 8 dígitos, tres modos de juego, host que controla el ritmo desde su teléfon
 ## Comandos
 ```
 pnpm dev        # servidor local
-pnpm build      # tsc -b && vite build
+pnpm build      # tsc -b && vite build && check:css
 pnpm typecheck
+pnpm check:css  # ninguna animación apunta a un keyframe inexistente
 pnpm test:db    # resetea la base local y corre smoke.sql + rls.sql
 ```
 
@@ -39,8 +40,16 @@ mails de prueba en Mailpit :54324.
    de animación, de estado ni de i18n.
 5. **Mobile-first de verdad.** Todo target táctil ≥44px, `safe-area-inset`
    respetado, nada que dependa de hover.
-6. **Respetar `prefers-reduced-motion`** en cada animación.
-7. **Las URLs de redirect de auth se declaran en los dos lados.** `supabase/config.toml`
+6. **Respetar `prefers-reduced-motion`**, pero reduciendo el movimiento, no
+   apagando todo. Los tokens `--lift` y `--pop-from` se anulan y las animaciones
+   siguen corriendo en opacidad: el jugador no puede quedarse sin saber si acertó.
+   Lo que late en loop se marca con `data-loop` y ahí sí se corta.
+7. **Nunca `animation: <nombre>` en un `.module.css`.** CSS Modules reescribe ese
+   identificador aunque el keyframe sea global, y queda apuntando a un nombre
+   inexistente: la animación no corre, no hay error, y en una captura se ve bien.
+   Va siempre `--anim: nombre; animation: var(--anim) ...`. Lo cubre
+   `pnpm check:css`, que corre solo dentro de `pnpm build`.
+8. **Las URLs de redirect de auth se declaran en los dos lados.** `supabase/config.toml`
    para local y el dashboard para producción: si el origen no está en la lista,
    Supabase lo descarta en silencio y manda el magic link al `site_url`.
 
