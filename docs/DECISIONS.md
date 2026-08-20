@@ -22,4 +22,6 @@
 | 18 | `ensureSession()` valida con `getUser()`, no con `getSession()` | `getSession()` solo lee localStorage. Supabase borra los usuarios anónimos abandonados: el token seguía validando y recién explotaba al insertar en `players`. |
 | 19 | `server_now()` como RPC aparte | El deadline es del servidor pero la cuenta regresiva la dibuja el teléfono. El cliente mide el offset una vez. Función chica en vez de meter `now()` en `get_game_state` y tener que duplicarla entera. |
 | 20 | La barra del timer se anima con CSS, no con estado | `animation-duration` total + `animation-delay` negativo por lo transcurrido: fluida y sin re-renders. Solo el número tickea. |
+| 21 | El compás de 3s de la vuelta final lo cuenta el cliente | Única excepción a la regla 1, y es segura: la partida ya terminó y los puntos están cerrados, así que adelantarse por DevTools no da ventaja. Durante el juego iría contra la regla. |
+| 22 | En la vuelta final avanza el host, no un timer | Consistente con el resto: el anfitrión maneja el ritmo. El compás de 3s solo destraba el botón. |
 

@@ -119,6 +119,8 @@ const es = {
   playAgain: 'Volver al inicio',
   waitingHost: 'Esperando al anfitrión…',
 
+  revealTitle: '¿De quién era?',
+
   errGeneric: 'Algo salió mal. Probá de nuevo.',
 }
 
@@ -237,6 +239,8 @@ const en: typeof es = {
   gameOver: 'Game over',
   playAgain: 'Back to start',
   waitingHost: 'Waiting for the host…',
+
+  revealTitle: 'Whose was it?',
 
   errGeneric: 'Something went wrong. Try again.',
 }

@@ -3,6 +3,7 @@ import { FillCard } from '../components/FillCard'
 import { Finished } from '../components/Finished'
 import { Lobby } from '../components/Lobby'
 import { Playing } from '../components/Playing'
+import { Revealing } from '../components/Revealing'
 import { useI18n } from '../lib/i18n'
 import { useGameState } from '../lib/useGameState'
 import { useHostClock } from '../lib/useHostClock'
@@ -37,6 +38,8 @@ export default function Game() {
 
   if (game.status === 'finished') return <Finished state={state} />
 
-  // 'revealing' es la vuelta final de A Ciegas (fase 6): por ahora cae acá.
+  // Vuelta final de A Ciegas: recorre las cartas mostrando quién acertó.
+  if (game.status === 'revealing') return <Revealing state={state} onRefresh={refresh} />
+
   return <Playing state={state} offset={offset} onRefresh={refresh} />
 }

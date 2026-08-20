@@ -269,6 +269,51 @@ begin
   raise notice 'A CIEGAS ok';
 end $$;
 
+-------------------------------------- A CIEGAS: reduccion de candidatos
+-- Con 5 participantes el jugador ve 4 candidatos. La reduccion frena en 2, asi
+-- que la progresion esperada es 4 -> 3 -> 4 -> 4: en cuanto quedarian menos de
+-- 2 sin usar vuelven todos, y la ultima carta nunca queda forzada.
+--
+-- No hace falta arrancar la partida: blind_candidates solo depende de
+-- participants() (jugadores con ficha) y de guesses.
+do $$
+declare
+  host uuid; u uuid; gid uuid; tid uuid; cd text; me uuid; others uuid[];
+  n int; expected int[] := array[4, 3, 4, 4]; i int; nm text;
+begin
+  host := t_user('host-blind5@t.co');
+  perform t_as(host);
+  insert into templates (owner_id, name, fields, time_limit_s)
+  values (host, 'Blind5', t_fields(), null) returning id into tid;
+  gid := (create_game(tid, 'a_ciegas', true, 'Ana', 'A') ->> 'game_id')::uuid;
+  select code into cd from games where id = gid;
+  perform submit_entry(gid, t_answers(host::text));
+
+  foreach nm in array array['Beto', 'Cami', 'Dani', 'Emi'] loop
+    u := t_user(nm || '-blind5@t.co');
+    perform t_as(u);
+    perform join_game(cd, nm, left(nm, 1));
+    perform submit_entry(gid, t_answers(u::text));
+  end loop;
+
+  assert (select count(*) from participants(gid)) = 5, 'deben ser 5 participantes';
+
+  select id into me from players where game_id = gid and nickname = 'Beto';
+  select array_agg(id) into others from participants(gid) where id <> me;
+  assert array_length(others, 1) = 4, 'el jugador debe ver 4 candidatos';
+
+  for i in 1..4 loop
+    n := array_length(blind_candidates(gid, me), 1);
+    assert n = expected[i],
+      'tras ' || (i - 1) || ' asignaciones esperaba ' || expected[i] || ', hubo ' || n;
+    -- Se registra la asignacion directo: lo que se prueba es la funcion.
+    insert into guesses (game_id, round_index, guesser_id, guessed_player_id, is_correct)
+    values (gid, 100 + i, me, others[i], false);
+  end loop;
+
+  raise notice 'A CIEGAS reduccion ok';
+end $$;
+
 ------------------------------------------------------------------ HISTORIAL
 do $$
 declare h jsonb;

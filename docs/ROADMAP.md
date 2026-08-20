@@ -6,7 +6,7 @@
 - [x] **Fase 3 — Auth y lobby.** Magic link, Google, sesión anónima. Home, crear partida, unirse por código, nombre + emoji, lobby en vivo por Realtime. Verificado en navegador contra la base local.
 - [x] **Fase 4 — Plantillas.** Creador con campos obligatorios/opcionales/multivalor, timer en la plantilla, compartir. Partida Rápida (plantilla descartable). Formulario de ficha integrado al flujo de partida. Verificado en navegador, incluido el login por magic link.
 - [x] **Fase 5 — Motor + Relámpago.** Máquina de estados, revelación automática cada 2,5s, timer contra el reloj del servidor, controles del host, resultado de ronda y podio con posiciones compartidas. Partida completa de 3 jugadores jugada en navegador.
-- [ ] **Fase 6 — A Ciegas.** Reusa el motor. Opciones que se reducen + revelación final.
+- [x] **Fase 6 — A Ciegas.** Opciones que se reducen con freno en 2, sin feedback durante el juego, y vuelta final carta por carta con compás de 3s. Partida de 5 jugadores jugada entera en navegador.
 - [ ] **Fase 7 — Cadena.** Turnos y cola aleatoria.
 - [ ] **Fase 8 — Historial.** Pantalla de historial por plantilla y fecha (el podio ya salió en la fase 5).
 - [ ] **Fase 9 — Animaciones y pulido.** Transiciones, cuenta regresiva, revelación, podio.
