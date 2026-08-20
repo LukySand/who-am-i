@@ -16,3 +16,6 @@
 | 12 | Picker de emoji del sistema, repetidos permitidos | Cero librería de emojis y cero fricción al unirse. |
 | 13 | En A Ciegas la reducción de opciones frena en 2 | Evita que la última carta quede forzada sin elección real. |
 | 14 | Los campos se revelan solos cada 2,5s | El host igual puede cortar con "Mostrar opciones". Menos toques durante la partida. |
+| 15 | Sesiones anónimas habilitadas | Los invitados necesitan `auth.uid()` para que RLS los deje jugar. Vienen apagadas por defecto: hay que activarlas también en el dashboard. |
+| 16 | El estado nunca se deriva del payload de Realtime | Ese payload viene sin el filtrado del secreto y puede llegar desordenado. Realtime solo avisa; el estado se relee con `get_game_state`. |
+

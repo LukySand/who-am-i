@@ -1,0 +1,9 @@
+.code {
+  min-height: 64px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-align: center;
+  text-indent: 0.35em; /* compensa el tracking del último dígito */
+  font-variant-numeric: tabular-nums;
+}

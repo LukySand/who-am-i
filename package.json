@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "test:db": "supabase db reset >/dev/null && cat supabase/tests/smoke.sql supabase/tests/rls.sql | docker exec -i supabase_db_who-am-i psql -U postgres -d postgres -q -f -"
+    "test:db": "supabase db reset >/dev/null && cat supabase/tests/smoke.sql supabase/tests/rls.sql | docker exec -i supabase_db_who-am-i psql -U postgres -d postgres -q -f -",
+    "gen:types": "supabase gen types typescript --local > src/lib/database.types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.58.0",

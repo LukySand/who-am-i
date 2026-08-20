@@ -1,0 +1,28 @@
+.row {
+  display: grid;
+  grid-template-columns: var(--tap) 1fr;
+  gap: 10px;
+  align-items: end;
+}
+
+.row > .emoji {
+  align-self: end;
+}
+
+.emoji {
+  min-height: var(--tap);
+  width: var(--tap);
+  padding: 0;
+  text-align: center;
+  font-size: 1.6rem;
+  line-height: 1;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.emoji:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}

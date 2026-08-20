@@ -1,9 +1,9 @@
 # Roadmap
 
 - [x] **Fase 1 — Pipeline.** Scaffold Vite+React+TS, build verde, docs.
-- [ ] **Fase 1b — Deploy.** Push a GitHub, conectar Vercel, env vars, deploy vivo.
+- [x] **Fase 1b — GitHub.** Pusheado a `LukySand/who-am-i`. Falta Vercel + `db push` (necesitan tus credenciales).
 - [x] **Fase 2 — Base de datos.** Migraciones, RLS, RPCs, generador de códigos, 6 plantillas de fábrica (3 × 2 idiomas). Tests de las tres modalidades + test de RLS con rol `authenticated`.
-- [ ] **Fase 3 — Auth y lobby.** Magic link, Google, anónimos. Crear partida, unirse por código, nombre + emoji, lista en vivo.
+- [x] **Fase 3 — Auth y lobby.** Magic link, Google, sesión anónima. Home, crear partida, unirse por código, nombre + emoji, lobby en vivo por Realtime. Verificado en navegador contra la base local.
 - [ ] **Fase 4 — Plantillas.** Creador de plantillas, campos obligatorios/opcionales/multivalor, compartir. Formulario de carga.
 - [ ] **Fase 5 — Motor + Relámpago.** Máquina de estados, Realtime, timer, controles del host.
 - [ ] **Fase 6 — A Ciegas.** Reusa el motor. Opciones que se reducen + revelación final.
