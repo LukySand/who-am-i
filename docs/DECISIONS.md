@@ -27,4 +27,6 @@
 | 23 | En Cadena el timeout pasa el turno, no cierra la carta | `advance_phase` trataba `voting` igual en los tres modos y llamaba a `close_round`, que marca incorrectos a todos los que faltaban: un jugador colgado quemaba la carta entera. Ahora se registra su no-voto y sigue la cola. |
 | 24 | Los intentos fallidos de Cadena se muestran a todos | En cuanto alguien dice un nombre en voz alta es información pública. Esconderlo solo obligaría a memorizar. Las opciones **no** se reducen: la regla no lo pide. |
 | 25 | El host tiene "Saltear turno" en Cadena | Sin límite de tiempo, un jugador que no responde congela la partida. Es el mismo camino que el vencimiento del timer. |
+| 26 | Fechas con `Intl.DateTimeFormat` | Formatea en el idioma activo sin ninguna dependencia. Viene en el navegador. |
+| 27 | El historial reusa `/partida/:id` para ver el podio | La partida terminada ya cae en `Finished` por su `status`. Cero pantallas nuevas. |
 

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { I18nProvider } from './lib/i18n'
 import Game from './routes/Game'
+import History from './routes/History'
 import Home from './routes/Home'
 import Join from './routes/Join'
 import NewGame from './routes/NewGame'
@@ -17,7 +18,8 @@ export default function App() {
           <Route path="/cuenta" element={<SignIn />} />
           <Route path="/entrar" element={<Join />} />
           <Route path="/nueva" element={<NewGame />} />
-          <Route path="/plantillas" element={<Templates />} />
+          <Route path="/historial" element={<History />} />
+        <Route path="/plantillas" element={<Templates />} />
           <Route path="/plantillas/nueva" element={<TemplateEditor />} />
           <Route path="/plantillas/:templateId" element={<TemplateEditor />} />
           <Route path="/partida/:gameId" element={<Game />} />

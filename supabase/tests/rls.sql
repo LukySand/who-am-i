@@ -94,3 +94,31 @@ end $$;
 
 reset role;
 select 'RLS OK' as resultado;
+
+-------------------------------------- HISTORIAL: alcance por usuario
+-- Requisito: lo ve todo usuario registrado que jugo, no solo el host. Y nadie
+-- ve partidas en las que no estuvo.
+do $$
+declare gid uuid; ids uuid[]; otro uuid; n_host int; n_jug int; n_otro int;
+begin
+  select * into gid, ids from t_setup('relampago');
+  -- Avanza a ciegas hasta el final: el host es el unico que puede.
+  perform t_as(ids[1]);
+  for i in 1..80 loop
+    exit when (select status from games where id = gid) = 'finished';
+    perform advance_phase(gid);
+  end loop;
+
+  perform t_as(ids[1]); select jsonb_array_length(my_history()) into n_host;
+  perform t_as(ids[2]); select jsonb_array_length(my_history()) into n_jug;
+
+  otro := t_user('nadie@t.co');
+  perform t_as(otro); select jsonb_array_length(my_history()) into n_otro;
+
+  assert n_host >= 1, 'el host ve su partida';
+  assert n_jug  >= 1, 'un jugador que no es host tambien la ve';
+  assert n_otro  = 0, 'alguien que no jugo no ve nada, vio ' || n_otro;
+
+  raise notice 'HISTORIAL ok';
+end $$;
+

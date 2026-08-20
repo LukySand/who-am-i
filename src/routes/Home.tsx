@@ -28,9 +28,14 @@ export default function Home() {
           </Link>
         )}
         {isRegistered && (
-          <Link to="/plantillas" className={ui.btn}>
-            {t.templates}
-          </Link>
+          <>
+            <Link to="/plantillas" className={ui.btn}>
+              {t.templates}
+            </Link>
+            <Link to="/historial" className={ui.btn}>
+              {t.history}
+            </Link>
+          </>
         )}
       </div>
 

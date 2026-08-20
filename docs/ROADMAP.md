@@ -8,6 +8,6 @@
 - [x] **Fase 5 — Motor + Relámpago.** Máquina de estados, revelación automática cada 2,5s, timer contra el reloj del servidor, controles del host, resultado de ronda y podio con posiciones compartidas. Partida completa de 3 jugadores jugada en navegador.
 - [x] **Fase 6 — A Ciegas.** Opciones que se reducen con freno en 2, sin feedback durante el juego, y vuelta final carta por carta con compás de 3s. Partida de 5 jugadores jugada entera en navegador.
 - [x] **Fase 7 — Cadena.** Turnos, cola aleatoria, intentos descartados a la vista, y timeout que pasa el turno en vez de quemar la carta. Probado con y sin límite de tiempo.
-- [ ] **Fase 8 — Historial.** Pantalla de historial por plantilla y fecha (el podio ya salió en la fase 5).
+- [x] **Fase 8 — Historial.** Lista por plantilla y fecha, con puesto y puntaje. Abre el podio de cualquier partida vieja. Cubierto por test: lo ve todo usuario registrado que jugó, no solo el host, y nadie ve partidas ajenas.
 - [ ] **Fase 9 — Animaciones y pulido.** Transiciones, cuenta regresiva, revelación, podio.
 - [ ] **Fase 10 — Prueba real.** Partida con 5+ teléfonos. Bugs de reconexión y timer.

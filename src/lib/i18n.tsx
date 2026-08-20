@@ -124,6 +124,8 @@ const es = {
   ruledOut: 'Ya se descartaron',
   noAnswer: 'sin respuesta',
   skipTurn: 'Saltear turno',
+  historyNeedsAccount: 'Necesitás una cuenta para guardar tus partidas.',
+  noGames: 'Todavía no jugaste ninguna partida',
   revealTitle: '¿De quién era?',
 
   errGeneric: 'Algo salió mal. Probá de nuevo.',
@@ -250,6 +252,8 @@ const en: typeof es = {
   ruledOut: 'Already ruled out',
   noAnswer: 'no answer',
   skipTurn: 'Skip turn',
+  historyNeedsAccount: 'You need an account to keep your games.',
+  noGames: "You haven't played any games yet",
   revealTitle: 'Whose was it?',
 
   errGeneric: 'Something went wrong. Try again.',
