@@ -219,6 +219,53 @@ begin
   raise notice 'CADENA ok';
 end $$;
 
+-------------------------------------- CADENA: timeout pasa el turno
+-- Si a un jugador se le vence el tiempo, la carta NO se quema: se registra su
+-- no-voto como error y sigue el siguiente de la cola. Antes advance_phase
+-- llamaba a close_round y marcaba incorrectos a todos los que faltaban.
+do $$
+declare
+  gid uuid; ids uuid[]; cola uuid[]; cur uuid; pendientes int; g2 games;
+begin
+  select * into gid, ids from t_setup('cadena');
+  perform t_as(ids[1]); perform open_voting(gid);
+
+  select array_agg(player_id order by position) into cola
+  from chain_turns where game_id = gid and round_index = 0;
+  assert array_length(cola, 1) = 3, 'con 4 participantes la cola es de 3';
+
+  cur := cola[1];
+
+  -- El host saltea al de turno: mismo camino que el vencimiento del timer.
+  perform t_as(ids[1]);
+  perform advance_phase(gid);
+
+  select * into g2 from games where id = gid;
+  assert g2.phase = 'voting',
+    'la carta sigue viva tras un timeout, quedo en ' || g2.phase;
+
+  select count(*) into pendientes from chain_turns
+  where game_id = gid and round_index = 0 and not resolved;
+  assert pendientes = 2, 'deben quedar 2 turnos, quedaron ' || pendientes;
+
+  assert exists (select 1 from guesses where game_id = gid and round_index = 0
+                 and guesser_id = cur and guessed_player_id is null and not is_correct),
+    'el no-voto queda registrado como error';
+
+  assert (select count(*) from guesses where game_id = gid and round_index = 0) = 1,
+    'solo se marca al que se colgo, no a los que todavia no jugaron';
+
+  -- Se saltean los dos que quedan: ahi si se cierra la carta.
+  perform advance_phase(gid);
+  perform advance_phase(gid);
+  select * into g2 from games where id = gid;
+  assert g2.phase = 'result', 'agotada la cola se pasa a result, quedo en ' || g2.phase;
+  assert (select sum(score) from players where game_id = gid) = 0,
+    'nadie suma si nadie acerto';
+
+  raise notice 'CADENA timeout ok';
+end $$;
+
 ------------------------------------------------------------------ A CIEGAS
 do $$
 declare

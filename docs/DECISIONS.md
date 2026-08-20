@@ -24,4 +24,7 @@
 | 20 | La barra del timer se anima con CSS, no con estado | `animation-duration` total + `animation-delay` negativo por lo transcurrido: fluida y sin re-renders. Solo el número tickea. |
 | 21 | El compás de 3s de la vuelta final lo cuenta el cliente | Única excepción a la regla 1, y es segura: la partida ya terminó y los puntos están cerrados, así que adelantarse por DevTools no da ventaja. Durante el juego iría contra la regla. |
 | 22 | En la vuelta final avanza el host, no un timer | Consistente con el resto: el anfitrión maneja el ritmo. El compás de 3s solo destraba el botón. |
+| 23 | En Cadena el timeout pasa el turno, no cierra la carta | `advance_phase` trataba `voting` igual en los tres modos y llamaba a `close_round`, que marca incorrectos a todos los que faltaban: un jugador colgado quemaba la carta entera. Ahora se registra su no-voto y sigue la cola. |
+| 24 | Los intentos fallidos de Cadena se muestran a todos | En cuanto alguien dice un nombre en voz alta es información pública. Esconderlo solo obligaría a memorizar. Las opciones **no** se reducen: la regla no lo pide. |
+| 25 | El host tiene "Saltear turno" en Cadena | Sin límite de tiempo, un jugador que no responde congela la partida. Es el mismo camino que el vencimiento del timer. |
 

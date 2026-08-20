@@ -53,6 +53,9 @@ Por turnos, encadenado.
    se pasa a la carta siguiente.
 4. Si falla: pasa al siguiente de la cola. Cada jugador intenta **una sola vez** por carta.
 5. Si nadie acierta: se revela el autor y **nadie suma**.
+   - Si a un jugador se le vence el tiempo (o el host lo saltea), cuenta como
+     error y sigue la cola: **no** se quema la carta.
+   - Los intentos fallidos quedan a la vista de todos. Las opciones no se reducen.
 6. El que acertó una carta **no puede ser el primero** de la cola en la carta siguiente.
 
 ## Modo 3 — A Ciegas

@@ -1,4 +1,5 @@
 import { useParams } from 'react-router'
+import { Chain } from '../components/Chain'
 import { FillCard } from '../components/FillCard'
 import { Finished } from '../components/Finished'
 import { Lobby } from '../components/Lobby'
@@ -40,6 +41,8 @@ export default function Game() {
 
   // Vuelta final de A Ciegas: recorre las cartas mostrando quién acertó.
   if (game.status === 'revealing') return <Revealing state={state} onRefresh={refresh} />
+
+  if (game.mode === 'cadena') return <Chain state={state} offset={offset} onRefresh={refresh} />
 
   return <Playing state={state} offset={offset} onRefresh={refresh} />
 }

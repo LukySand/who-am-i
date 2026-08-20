@@ -119,6 +119,11 @@ const es = {
   playAgain: 'Volver al inicio',
   waitingHost: 'Esperando al anfitrión…',
 
+  yourTurn: '¡Te toca a vos!',
+  turnOf: (n: string) => `Le toca a ${n}`,
+  ruledOut: 'Ya se descartaron',
+  noAnswer: 'sin respuesta',
+  skipTurn: 'Saltear turno',
   revealTitle: '¿De quién era?',
 
   errGeneric: 'Algo salió mal. Probá de nuevo.',
@@ -240,6 +245,11 @@ const en: typeof es = {
   playAgain: 'Back to start',
   waitingHost: 'Waiting for the host…',
 
+  yourTurn: "It's your turn!",
+  turnOf: (n: string) => `${n}'s turn`,
+  ruledOut: 'Already ruled out',
+  noAnswer: 'no answer',
+  skipTurn: 'Skip turn',
   revealTitle: 'Whose was it?',
 
   errGeneric: 'Something went wrong. Try again.',
