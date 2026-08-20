@@ -98,6 +98,27 @@ const es = {
   needOneField: 'Poné al menos una pregunta',
   maxFields: 'Hasta 8 preguntas',
 
+
+  roundOf: (a: number, b: number) => `Ronda ${a} de ${b}`,
+  whoIsIt: '¿Quién es?',
+  yourCard: 'Esta es tu ficha',
+  yourCardWait: 'Mirá nomás: en esta ronda no votás.',
+  votePrompt: 'Elegí de quién es',
+  voteLocked: 'Voto registrado',
+  itWas: 'Era',
+  youGotIt: '¡Acertaste! +1',
+  youMissed: 'No era esa',
+  youDidntVote: 'No votaste',
+  gotItRight: 'acertaron',
+  showOptions: 'Mostrar opciones',
+  nextCard: 'Siguiente',
+  finish: 'Ver podio',
+  podium: 'Podio',
+  points: 'pts',
+  gameOver: 'Fin de la partida',
+  playAgain: 'Volver al inicio',
+  waitingHost: 'Esperando al anfitrión…',
+
   errGeneric: 'Algo salió mal. Probá de nuevo.',
 }
 
@@ -195,6 +216,27 @@ const en: typeof es = {
   fastPlayDesc: 'Write the questions now, no template saved.',
   needOneField: 'Add at least one question',
   maxFields: 'Up to 8 questions',
+
+
+  roundOf: (a: number, b: number) => `Round ${a} of ${b}`,
+  whoIsIt: 'Who is it?',
+  yourCard: 'This is your card',
+  yourCardWait: "Just watch: you don't vote this round.",
+  votePrompt: 'Pick whose it is',
+  voteLocked: 'Vote locked in',
+  itWas: 'It was',
+  youGotIt: 'You got it! +1',
+  youMissed: 'Not that one',
+  youDidntVote: "You didn't vote",
+  gotItRight: 'got it right',
+  showOptions: 'Show options',
+  nextCard: 'Next',
+  finish: 'See podium',
+  podium: 'Podium',
+  points: 'pts',
+  gameOver: 'Game over',
+  playAgain: 'Back to start',
+  waitingHost: 'Waiting for the host…',
 
   errGeneric: 'Something went wrong. Try again.',
 }

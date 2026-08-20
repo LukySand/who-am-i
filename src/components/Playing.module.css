@@ -1,0 +1,27 @@
+.top {
+  display: grid;
+  gap: 10px;
+}
+
+.notice {
+  display: grid;
+  gap: 2px;
+  padding: 18px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  animation: pop 0.3s ease both;
+}
+
+.noticeTitle {
+  margin: 0;
+  font-weight: 700;
+}
+
+.notice p:last-child {
+  margin: 0;
+}
+
+.hint {
+  text-align: center;
+}

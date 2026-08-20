@@ -1,0 +1,46 @@
+.wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  transform-origin: left center;
+  animation: drain linear both;
+}
+
+.urgent {
+  background: var(--bad);
+}
+
+@keyframes drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.num {
+  min-width: 2ch;
+  text-align: right;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.urgentText {
+  color: var(--bad);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.18);
+  }
+}

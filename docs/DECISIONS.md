@@ -20,4 +20,6 @@
 | 16 | El estado nunca se deriva del payload de Realtime | Ese payload viene sin el filtrado del secreto y puede llegar desordenado. Realtime solo avisa; el estado se relee con `get_game_state`. |
 | 17 | Partida Rápida crea una plantilla `is_adhoc` | Así `games.template_id` nunca es null y el motor no necesita un caso especial. No aparece en ninguna lista. |
 | 18 | `ensureSession()` valida con `getUser()`, no con `getSession()` | `getSession()` solo lee localStorage. Supabase borra los usuarios anónimos abandonados: el token seguía validando y recién explotaba al insertar en `players`. |
+| 19 | `server_now()` como RPC aparte | El deadline es del servidor pero la cuenta regresiva la dibuja el teléfono. El cliente mide el offset una vez. Función chica en vez de meter `now()` en `get_game_state` y tener que duplicarla entera. |
+| 20 | La barra del timer se anima con CSS, no con estado | `animation-duration` total + `animation-delay` negativo por lo transcurrido: fluida y sin re-renders. Solo el número tickea. |
 

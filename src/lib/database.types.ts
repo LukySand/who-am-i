@@ -430,6 +430,7 @@ export type Database = {
       require_registered: { Args: never; Returns: string }
       require_user: { Args: never; Returns: string }
       round_count: { Args: { p_game_id: string }; Returns: number }
+      server_now: { Args: never; Returns: string }
       start_game: { Args: { p_game_id: string }; Returns: undefined }
       submit_entry: {
         Args: { p_answers: Json; p_game_id: string }
@@ -439,17 +440,6 @@ export type Database = {
         Args: { p_game_id: string; p_guess: string; p_round: number }
         Returns: Json
       }
-      t_answers: { Args: { p_tag: string }; Returns: Json }
-      t_as: { Args: { p_uid: string }; Returns: undefined }
-      t_fields: { Args: never; Returns: Json }
-      t_leaks: { Args: { p_table: string }; Returns: number }
-      t_pid: { Args: { p_gid: string; p_uid: string }; Returns: string }
-      t_setup: {
-        Args: { p_mode: Database["public"]["Enums"]["game_mode"] }
-        Returns: Record<string, unknown>
-      }
-      t_uid: { Args: { p_gid: string; p_pid: string }; Returns: string }
-      t_user: { Args: { p_email: string }; Returns: string }
     }
     Enums: {
       game_mode: "relampago" | "cadena" | "a_ciegas"

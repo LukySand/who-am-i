@@ -1,0 +1,61 @@
+.wrap {
+  display: grid;
+  gap: 18px;
+  animation: rise 0.35s ease both;
+}
+
+.reveal {
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.emoji {
+  font-size: 3.4rem;
+  line-height: 1;
+  animation: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.4) both 0.1s;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.verdict {
+  margin: 0;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  animation: pop 0.3s ease both 0.25s;
+}
+
+.ok {
+  color: var(--ok);
+}
+
+.bad {
+  color: var(--muted);
+}
+
+.who {
+  display: grid;
+  gap: 8px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 0.92rem;
+  font-weight: 600;
+}

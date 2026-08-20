@@ -58,6 +58,8 @@ El secreto del juego es la relación **carta → autor**. Si el front pudiera le
 | `advance_phase(game_id)` | nuevo estado (solo host) |
 | `submit_guess(game_id, round_index, guessed_player_id)` | en Relámpago/Cadena: `correcto/incorrecto`. En A Ciegas: solo `ok`. |
 | `finalize_game(game_id)` | podio |
+| `open_voting(game_id)` | botón "Mostrar opciones": saltea los campos que falten |
+| `server_now()` | hora del servidor, para el offset del reloj del cliente |
 
 - El código de 8 dígitos se genera con reintento sobre violación de unicidad.
 - `submit_guess` revalida contra `phase_ends_at`; un voto tardío se rechaza y
